@@ -2,10 +2,184 @@
 
 @theme inline {
   --font-sans: var(--font-noto-sans-jp);
+  --color-game-bg-from: #040d08;
+  --color-game-bg-via: #0a1f14;
+  --color-game-bg-to: #061510;
+  --color-game-surface: rgba(255, 255, 255, 0.05);
+  --color-game-surface-border: rgba(255, 255, 255, 0.1);
+  --color-game-text: #e2e8f0;
+  --color-game-text-muted: #94a3b8;
+  --color-game-accent: rgba(255, 200, 100, 0.4);
+}
+
+html {
+  background-color: #051a0e;
 }
 
 body {
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to bottom, #051a0e, #0c2a18, #071f12);
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+/* 星屑パーティクル背景 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.15), transparent),
+    radial-gradient(1px 1px at 80% 70%, rgba(255, 255, 255, 0.1), transparent),
+    radial-gradient(1.5px 1.5px at 50% 50%, rgba(110, 231, 183, 0.18), transparent),
+    radial-gradient(1px 1px at 10% 80%, rgba(255, 200, 100, 0.08), transparent);
+  background-size: 200px 200px, 150px 150px, 250px 250px, 180px 180px;
+  animation: drift 30s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: 200px 400px, -150px 300px, 100px -250px, -80px 200px; }
+}
+
+/* 花粉が風に吹かれるアニメーション */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(6px 6px at 12% 20%, rgba(255, 230, 50, 0.6), transparent),
+    radial-gradient(8px 8px at 55% 70%, rgba(255, 220, 30, 0.5), transparent),
+    radial-gradient(5px 5px at 75% 10%, rgba(255, 240, 80, 0.55), transparent),
+    radial-gradient(10px 10px at 90% 55%, rgba(255, 210, 20, 0.4), transparent),
+    radial-gradient(7px 7px at 25% 80%, rgba(255, 230, 50, 0.5), transparent),
+    radial-gradient(4px 4px at 40% 35%, rgba(255, 245, 100, 0.6), transparent),
+    radial-gradient(9px 9px at 65% 90%, rgba(255, 220, 30, 0.45), transparent);
+  background-size: 400px 350px, 350px 300px, 300px 400px, 450px 350px, 350px 400px, 280px 300px, 400px 280px;
+  animation: pollen-wind 10s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes pollen-wind {
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: 400px 200px, -300px 250px, 350px -150px, -200px 300px, 300px 180px, -250px -200px, 200px 280px; }
+}
+
+/* SSR虹シマー */
+@keyframes rainbow-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* グロー脈動 */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ゲームパネル（白カード置換） */
+.game-panel {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-panel::before,
+.game-panel::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(255,200,100,0.4);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 1;
+}
+.game-panel::before {
+  top: 6px; left: 6px;
+  border-width: 2px 0 0 2px;
+}
+.game-panel::after {
+  bottom: 6px; right: 6px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ゲームボタン */
+.game-btn {
+  position: relative;
+  padding: 12px 24px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+  color: white;
+  clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.game-btn:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%);
+  border-color: rgba(255,255,255,0.4);
+}
+.game-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.game-btn-primary {
+  background: linear-gradient(180deg, #10b981 0%, #059669 50%, #047857 100%);
+  border: 1px solid rgba(110,231,183,0.5);
+  box-shadow: 0 0 15px rgba(16,185,129,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.game-btn-primary:hover {
+  box-shadow: 0 0 25px rgba(16,185,129,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* レアリティフレーム */
+.rarity-frame-n {
+  border-color: rgba(158, 158, 158, 0.3);
+}
+.rarity-frame-r {
+  border-color: rgba(33, 150, 243, 0.4);
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.15), inset 0 0 20px rgba(33, 150, 243, 0.05);
+}
+.rarity-frame-sr {
+  border-color: rgba(255, 152, 0, 0.5);
+  box-shadow: 0 0 30px rgba(255, 152, 0, 0.2), inset 0 0 30px rgba(255, 152, 0, 0.05);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+.rarity-frame-ssr {
+  border: 2px solid transparent;
+  position: relative;
+}
+.rarity-frame-ssr::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #ff0000, #ff8800, #ffff00, #00ff00, #0088ff, #8800ff, #ff0000);
+  background-size: 400% 400%;
+  animation: rainbow-shift 3s linear infinite;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* 召喚陣回転 */
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes rotate-slow-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }

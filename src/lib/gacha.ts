@@ -41,8 +41,8 @@ export const rarityColors: Record<Rarity, string> = {
 };
 
 export const rarityGradients: Record<Rarity, string> = {
-  N: "from-gray-400 to-gray-600",
-  R: "from-blue-400 to-blue-600",
-  SR: "from-orange-400 to-red-500",
-  SSR: "from-yellow-300 via-amber-400 to-yellow-600",
+  N: "from-gray-500 to-gray-700",
+  R: "from-blue-500 via-blue-400 to-cyan-500",
+  SR: "from-orange-500 via-red-400 to-pink-500",
+  SSR: "from-yellow-300 via-amber-400 to-orange-500",
 };

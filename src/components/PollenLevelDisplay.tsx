@@ -20,12 +20,21 @@ export default function PollenLevelDisplay({
   const barWidth = (level / 5) * 100;
 
   return (
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
-      <h3 className="text-sm text-gray-500 mb-1">📍 {regionName}</h3>
+    <div className="w-full max-w-md game-panel p-6">
+      <h3 className="text-sm text-white/50 mb-1">{regionName}</h3>
       <div className="flex items-center gap-3 mb-3">
-        <span className="text-3xl">{pollenLevelEmojis[level]}</span>
+        <span
+          className="text-sm font-bold px-2 py-1 rounded-sm border"
+          style={{
+            color: pollenLevelColors[level],
+            borderColor: `${pollenLevelColors[level]}40`,
+            backgroundColor: `${pollenLevelColors[level]}15`,
+          }}
+        >
+          {pollenLevelEmojis[level]}
+        </span>
         <div>
-          <p className="text-lg font-bold text-gray-800">
+          <p className="text-lg font-bold text-white/90">
             今日の花粉レベル
           </p>
           <p
@@ -38,7 +47,7 @@ export default function PollenLevelDisplay({
       </div>
 
       {/* レベルバー */}
-      <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+      <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${barWidth}%` }}
@@ -56,7 +65,7 @@ export default function PollenLevelDisplay({
           className="mt-3 text-sm text-center font-medium"
           style={{ color: pollenLevelColors[level] }}
         >
-          ✨ 花粉レベルが高いためレア排出率UP！
+          花粉レベルが高いためレア排出率UP！
         </motion.p>
       )}
     </div>

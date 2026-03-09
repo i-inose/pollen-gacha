@@ -24,14 +24,16 @@ export default function RankingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-purple-50 to-pink-50 p-4">
+    <div className="min-h-screen flex flex-col items-center p-4 relative z-10">
       <header className="w-full max-w-md flex items-center justify-between py-4">
-        <h1 className="text-xl font-bold text-gray-800">🏆 ランキング</h1>
+        <h1 className="text-xl font-bold bg-linear-to-r from-emerald-300 to-amber-200 bg-clip-text text-transparent drop-shadow-lg tracking-wider">
+          ランキング
+        </h1>
         <a
           href="/"
-          className="px-4 py-2 text-sm bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors"
+          className="game-btn game-btn-primary px-4 py-2 text-sm no-underline"
         >
-          🌸 ガチャに戻る
+          ガチャに戻る
         </a>
       </header>
 
